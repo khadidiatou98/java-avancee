@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Pane layoutX="94.0" layoutY="50.0" prefHeight="304.0" prefWidth="419.0" style="-fx-background-color: yellow;">
+         <children>
+            <Text layoutX="31.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Liste Professeurs">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Text>
+            <TableView layoutX="14.0" layoutY="52.0" prefHeight="246.0" prefWidth="187.0">
+              <columns>
+                <TableColumn prefWidth="50.0" text="Id" />
+                <TableColumn prefWidth="64.0" text="Nom" />
+                  <TableColumn prefWidth="72.0" text="Grade" />
+              </columns>
+            </TableView>
+            <Text layoutX="210.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Classe" />
+            <MenuButton layoutX="255.0" layoutY="29.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="146.0">
+              <items>
+                <MenuItem mnemonicParsing="false" text="Action 1" />
+                <MenuItem mnemonicParsing="false" text="Action 2" />
+              </items>
+            </MenuButton>
+            <Text layoutX="227.0" layoutY="84.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Modules enseignés">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Text>
+            <TableView layoutX="216.0" layoutY="108.0" prefHeight="188.0" prefWidth="187.0">
+              <columns>
+                <TableColumn prefWidth="90.0" text="Libelle" />
+                <TableColumn prefWidth="95.0" text="Classe" />
+              </columns>
+            </TableView>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
