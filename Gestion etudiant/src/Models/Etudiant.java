@@ -13,6 +13,11 @@ public class Etudiant extends Personne {
     private String tuteur;
      //ManyToonen
     private Classe cl;
+
+    public Etudiant(String tuteur) {
+        this.tuteur = tuteur;
+        type="Etudiant";
+    }
    
     public Etudiant() {
         super();
@@ -46,7 +51,7 @@ public class Etudiant extends Personne {
 
     @Override
     public String toString() {
-        return super.toString()+"Tuteur:"+tuteur; //To change body of generated methods, choose Tools | Templates.
+        return super.toString()+"Tuteur:"+tuteur +"Classe:"+cl.getLibelle(); //To change body of generated methods, choose Tools | Templates.
     }
 
     

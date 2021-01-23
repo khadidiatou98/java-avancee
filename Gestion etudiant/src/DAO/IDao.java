@@ -9,6 +9,14 @@ package DAO;
  *
  * @author hp
  */
-public class IDao {
+public interface IDao <T>{
+    /*
+     public int insert(Classe classe)
+     public int insert(Personne pers)
+     public int insert(Details details)
+    //Genericité : Possibilité d'avoir des arguments dont le type est variable
+    //interface=contrat contenant des méthodes abstraites
     
+    */
+    public int insert (T objet);
 }

@@ -35,6 +35,10 @@ public class Details {
         this.professeur = professeur;
     }
 
+    public Details(Classe classe, Professeur professeur) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     public String getAnnee() {
         return annee;
     }

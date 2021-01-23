@@ -6,29 +6,73 @@
 package DAO;
 
 import Models.Classe;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author hp
  */
+//DAO ORM 
+
 public class DaoClasse implements IDao<Classe> {
-    private final String SQL_INSERT="INSERT INTO 'classe'('id' 'libelle' 'nbre' )VALUES (?,?);";
-    private final String SQL_SELECT_ALL="select * from classe"
-    
-    public int insert(Classe classe){
-        int nbreLigne=0;
-        //Insertion
-        //charger driver
-        Class.forName("com.mysql.jdbc.Driver"); {
-     } catch 
-            
-        return nbreLigne;
+    private final String SQL_INSERT="INSERT INTO `classe` (`libelle`, `nbre`) VALUES (?,?)";
+    private final String SQL_SELECT_ALL="select * from classe";
+    private  DaoMysql mysql;
+
+    public DaoClasse() {
+        mysql=new DaoMysql();
+                
     }
     
+    @Override
+    public int insert(Classe classe){
+        int nbreLigne=0;
+        
+        //1-chargement du driver etouvrir connexion
+        mysql.ouvrirConnexionBD();
+        //preparer la requete
+        mysql.preparerRequete(SQL_INSERT);
+        //Remplacer les variables de la requete par les valeurs
+        mysql.getPs().setString(1, classe.getLibelle());
+        mysql.getPs().setInt(2, classe.getNbre());
+        //Executer la requete
+        nbreLigne=mysql.executeMisAJour();
+        mysql.closeConnection();
+         return nbreLigne;  
+   
+    }
     public List<Classe> findAll(){
-   List<Classe>lClasse=new ArrayList<>
-            
-}
+        List<Classe>lClasses=new ArrayList<>(); 
+            try{
+                    mysql.ouvrirConnexionBD();
+                    mysql.preparerRequete(SQL_SELECT_ALL);
+                    //Executer la requete
+                    ResultSet rs=mysql.executeSelect();
+                    while(rs.next()){
+                     Classe cl = new Classe();
+                           //parcours et hydratation des elements
+                           /*
+                            rs.getInt("id"),
+                           rs.getString("libelle"),
+                           rs.getInt("nbre"));
+                           */
+                           cl.setId(rs.getInt("id"));
+                           cl.setLibelle(rs.getString("libelle"));
+                           cl.setNbre(rs.getInt("nbre"));
+                           //ajout dans la liste
+                           lClasses.add(cl);
+                    }
+            }catch(SQLException ex) {
+                Logger.getLogger(DaoClasse.class.getName()).log(Level.SEVERE, null, ex);
+            }finally{
+            mysql.closeConnexion();
+        }
+        //Remplir la liste
+        return lClasses;
+    }
 }

@@ -25,6 +25,11 @@ public class Classe {
     }
     //select
 
+    public Classe(int id) {
+        this.id = id;
+    }
+
+    
     public Classe(String libelle, int nbre) {
         this.libelle = libelle;
         this.nbre = nbre;

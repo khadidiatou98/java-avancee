@@ -6,11 +6,14 @@
 package Metier;
 
 import DAO.DaoClasse;
+import DAO.DaoDetails;
 import DAO.DaoPersonne;
 import Models.Classe;
 import Models.Details;
 import Models.Etudiant;
 import Models.Personne;
+import Models.Professeur;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -28,7 +31,7 @@ public class Service {
        daoDetails=new DaoDetails();
     }
     
-        public List<Personne>listerEtudiantParClasse(Classe classe){
+        public List<Etudiant>listerEtudiantParClasse(Classe classe) throws SQLException{
        return daoPersonne.findByClasse(classe);    
      }       
      
@@ -52,24 +55,29 @@ public class Service {
       public boolean creerPersonne(Personne pers){
         return daoPersonne.insert(pers)!=0;
     }
-    public professeur chercherProfesseur(String matricule){
-        return daoPersonne.findProfesseurByMatricule(matricule),
+    public Professeur chercherProfesseur(String matricule) throws SQLException{
+        return daoPersonne.findProfesseurByMatricule(matricule);
     }
     public boolean attribuerClasse(Classe classe,Professeur prof,List<String>modules,String annee)  {
-               if(prof.get.Id==0){
+               if(prof.getId()==0){
                   int id=daoPersonne.insert(prof) ;
                   prof.setId(id);
                }
         Details details=new Details(annee,modules,classe,prof);
-        return daoDetails.insert(detail)!=0;
+        return daoDetails.insert(details)!=0;
                
     }
+      public List<Professeur> listerProfesseur(){
+        return daoPersonne.findProfesseur();
+    
+}
+    
     public List<String> listerModulesProfesseurParClasse(Classe classe,Professeur professeur) {
           Details details=new Details(classe,professeur);
           return daoDetails.findModules(details);
 
     }
-public Personne seConnecter(String login, String pwd){
+public Personne seConnecter(String login, String pwd) throws SQLException{
         return daoPersonne.findUserConnect(login, pwd);
         
         }

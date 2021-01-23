@@ -18,6 +18,7 @@ public class Professeur extends Personne {
      private  String matricule;
     public Professeur() {
     }
+    
 
     public String getMatricule() {
         return matricule;
@@ -60,6 +61,5 @@ public class Professeur extends Personne {
         return super.toString()+"Grade:"+grade; //To change body of generated methods, choose Tools | Templates.
     }
 
-    
-    
+   
 }
