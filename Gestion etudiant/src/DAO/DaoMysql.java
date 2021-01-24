@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dao;
+package DAO;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -19,8 +19,9 @@ import java.util.logging.Logger;
  * @author user
  */
 public class DaoMysql {
-    
+    //Objet de Connexion
     private Connection conn=null;
+    //Executer les requetes
     PreparedStatement ps=null;
 
     public PreparedStatement getPs() {
@@ -79,4 +80,3 @@ public class DaoMysql {
     }
     
 }
- 

@@ -10,11 +10,11 @@ package Models;
  * @author hp
  */
 public abstract class Personne {
-    protected int id;
-    protected String nomComplet;
-protected String type;
-protected String login;
-protected String pwd;
+      protected int id;
+      protected String nomComplet;
+      protected String type;
+      protected String login;
+      protected String pwd;
     public Personne() {
     }
 

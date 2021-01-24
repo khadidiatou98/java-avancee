@@ -5,11 +5,7 @@
  */
 package gestion.etudiant;
 
-import Metier.Service;
-import Models.Classe;
-import Models.Etudiant;
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -17,99 +13,113 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import Metier.Service;
+import Models.Classe;
+import Models.Etudiant;
+import java.sql.SQLException;
 
 /**
  * FXML Controller class
  *
- * @author hp
+ * @author user
  */
 public class ClasseController implements Initializable {
 
-    @FXML
-    private Button handleCreerClasse;
+    /*
+       Mes attributs
+    */
+    private Service metier;
+    //ObservableList
+     ObservableList<Classe> obClasses;
+     ObservableList<Etudiant> obEtudiants;
     @FXML
     private TextField txtLibelle;
     @FXML
-    private TextField txtNbre;
-    @FXML
-    private TableColumn<Classe, String> tblcLibelle;
-    @FXML
-    private TableColumn<Classe, String> tblcNbre;
-    @FXML
-    private TableColumn<Etudiant,String> tblcNomPrenom;
-    @FXML
-    private TableColumn<Classe, String> tblcId;
-    @FXML
-    private TableColumn<Etudiant, String> tblcEtuId;
-    @FXML
-    private TableColumn<Etudiant, String> tblcTuteur;
+    private TextField txtNbreEtudiant;
     @FXML
     private TableView<Classe> tblvClasse;
     @FXML
+    private TableColumn<Classe, String> tblcId;
+    @FXML
+    private TableColumn<Classe, String> tblcLibelle;
+    @FXML
+    private TableColumn<Classe, String> tblcNbreEtudiant;
+    @FXML
     private TableView<Etudiant> tblvEtudiant;
-    private Service metier;
-    ObservableList<Classe> obClasses;
-    ObservableList<Etudiant> obEtudiants;
+    @FXML
+    private TableColumn<Etudiant, String> tblcEtuId;
+    @FXML
+    private TableColumn<Etudiant, String> tblcNomPrenom;
+    @FXML
+    private TableColumn<Etudiant, String> tblcTuteur;
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-        metier=new Service();
-        obClasses=FXCollections.observableArrayList(
-        metier.listerClasse()
-        );
-       loadTable();
-    }   
-    private void loadTable(){
-         tblcId.setCellValueFactory(new PropertyValueFactory<>("id"));
-        tblcLibelle.setCellValueFactory(new PropertyValueFactory<>("libelle"));
-        tblcNbre.setCellValueFactory(new PropertyValueFactory<>("nbre"));
-        tblvClasse.setItems(obClasses);
-        
+       metier=new Service();
+       //Chargement de ObservableList à partir de List de Classe
+       obClasses=FXCollections.
+                 observableArrayList(
+                          metier.listerClasse()
+               );
+          loadTable();
     }
+
+    private void loadTable(){
+         //Construction des cellule de Table
+       tblcId.setCellValueFactory(new PropertyValueFactory<>("id"));
+       tblcLibelle.setCellValueFactory(new PropertyValueFactory<>("libelle"));
+       tblcNbreEtudiant.setCellValueFactory(new PropertyValueFactory<>("nbre"));
+       //TableView se Souscrit à L'observable
+       tblvClasse.setItems(obClasses);
+    }
+    
 
     @FXML
     private void handleCreerClasse(ActionEvent event) {
         String libelle=txtLibelle.getText();
-        int nbre=Integer.parseInt (txtNbre.getText());
-        Classe cl=new Classe(libelle,nbre);
-        if (metier.creerClasse(cl)){
+        int nbre=Integer.parseInt(txtNbreEtudiant.getText());
+        Classe cl=new Classe(libelle, nbre);
+        if(metier.creerClasse(cl)){
             Alert alert=new Alert(Alert.AlertType.INFORMATION);
-            alert.setContentText("Classe ajoutée avec succes");
+            alert.setContentText("Classe ajoutée avec success");
             alert.setTitle("Information");
             alert.show();
-            obClasses.add(cl);
+            //Mettre Jour la Table View
+             obClasses.add(cl);
         }else{
             Alert alert=new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Erreur Insertion");
             alert.setTitle("Erreur");
             alert.show();
-            
         }
+        
     }
 
     @FXML
     private void handleShowEtudiant(MouseEvent event) throws SQLException {
+        //Recuperer la Classe Selectionnée
         Classe classeSelected=tblvClasse
-                            .getSelectionModel()
-                            .getSelectedItem();
+                              .getSelectionModel()
+                              .getSelectedItem();
         obEtudiants=FXCollections
                 .observableArrayList(
-                  metier
-                     .listerEtudiantParClasse(classeSelected)
-        );
+                        metier
+                                .listerEtudiantParClasse(classeSelected)
+                );
+        //Construire les colonnes
         tblcEtuId.setCellValueFactory(new PropertyValueFactory<>("id"));
         tblcNomPrenom.setCellValueFactory(new PropertyValueFactory<>("nomComplet"));
         tblcTuteur.setCellValueFactory(new PropertyValueFactory<>("tuteur"));
+        //Souscription
         tblvEtudiant.setItems(obEtudiants);
     }
     
 }
+
